@@ -5,7 +5,11 @@ import kotlin.random.Random
 /**
  * Семёрочка
  */
-class Vaz2107 private constructor(color: String) : VazPlatform(color) {
+class Vaz2107 private constructor(
+    color: String,
+    override val tankMouth: PetrolMouth
+) : VazPlatform(color) {
+
     /**
      * Сам-себе-сборщик ВАЗ 2107.
      */
@@ -17,7 +21,7 @@ class Vaz2107 private constructor(color: String) : VazPlatform(color) {
             }
         }
 
-        override fun build(plates: Car.Plates): Vaz2107 = Vaz2107("Зеленый").apply {
+        override fun build(plates: Car.Plates): Vaz2107 = Vaz2107("Зеленый", PetrolMouth()).apply {
             this.engine = getRandomEngine()
             this.plates = plates
         }
@@ -59,7 +63,7 @@ class Vaz2107 private constructor(color: String) : VazPlatform(color) {
 
     // Выводим состояние машины
     override fun toString(): String {
-        return "Vaz2107(plates=$plates, wheelAngle=$wheelAngle, currentSpeed=$currentSpeed)"
+        return "Vaz2107(plates=$plates, wheelAngle=$wheelAngle, currentSpeed=$currentSpeed), fuelLevel=${tankMouth.getContents()}"
     }
 
     /**
@@ -67,12 +71,19 @@ class Vaz2107 private constructor(color: String) : VazPlatform(color) {
      */
     override val carOutput: CarOutput = VazOutput()
 
+    override fun getContents(): Int = tankMouth.getContents()
+    override fun receiveFuel(liters: Int) = tankMouth.receiveFuel(liters)
+
     /**
      * Имеет доступ к внутренним данным ЭТОГО ВАЗ-2107!
      */
     inner class VazOutput : CarOutput {
         override fun getCurrentSpeed(): Int {
             return this@Vaz2107.currentSpeed
+        }
+
+        override fun getFuelContents(): Int {
+            return this@Vaz2107.tankMouth.getContents()
         }
     }
 }

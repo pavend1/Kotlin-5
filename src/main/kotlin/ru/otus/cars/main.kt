@@ -16,6 +16,22 @@ fun main() {
     techChecks()
     println("\n===> Taz...")
     println(Taz.color)
+
+    println()
+
+    println("creating cars collection...")
+    val cars = listOf(
+        Vaz2107.build(Car.Plates("1", 1)),
+        Vaz2108.build(Car.Plates("2", 2)),
+        Taz,
+    )
+    println("cars collection created!")
+
+    cars.forEach {
+        println(it)
+        FuelStation().refuel(it, 10)
+        println(it)
+    }
 }
 
 fun driveCars() {

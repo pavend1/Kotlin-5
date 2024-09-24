@@ -1,6 +1,9 @@
 package ru.otus.cars
 
 object Taz: Car {
+    override val tankMouth: Car.TankMouth
+        get() = throw IllegalStateException()
+
     /**
      * Номерной знак
      */
@@ -23,6 +26,14 @@ object Taz: Car {
      */
     override fun getEquipment(): String = "Крыса"
 
+    override fun getContents(): Int {
+        throw NotImplementedError()
+    }
+
+    override fun receiveFuel(liters: Int) {
+        throw IllegalStateException("boom")
+    }
+
     /**
      * Руль вправо на [degrees] градусов
      */
@@ -35,5 +46,9 @@ object Taz: Car {
      */
     override fun wheelToLeft(degrees: Int) {
         throw NotImplementedError("Руля нет")
+    }
+
+    override fun toString(): String {
+        return "Taz(tankMouth=N/A, plates=N/A, color='$color', carOutput=N/A)"
     }
 }
